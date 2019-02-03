@@ -13,7 +13,7 @@ module.exports = [{
 2. Go to \`node_modules\` ➜ \`${moduleName}\` and add \`${name}.xcodeproj\`
 3. In XCode, in the project navigator, select your project. Add \`lib${name}.a\` to your project's \`Build Phases\` ➜ \`Link Binary With Libraries\`
 4. Run your project (\`Cmd+R\`)<
-`;
+`.replace(/  *$/gm, '');
     }
 
     if (platforms.indexOf('android') >= 0) {
@@ -32,7 +32,7 @@ module.exports = [{
   	\`\`\`
       compile project(':${moduleName}')
   	\`\`\`
-`;
+`.replace(/  *$/gm, '');
     }
 
     if (platforms.indexOf('windows') >= 0) {
@@ -44,7 +44,7 @@ module.exports = [{
 2. Open up your \`MainPage.cs\` app
   - Add \`using ${namespace}.${name};\` to the usings at the top of the file
   - Add \`new ${name}Package()\` to the \`List<IReactPackage>\` returned by the \`Packages\` method
-`;
+`.replace(/  *$/gm, '');
     }
 
     return `# ${moduleName}
@@ -68,18 +68,21 @@ import ${name} from '${moduleName}';
 // TODO: What to do with the module?
 ${name};
 \`\`\`
-  `;
+
+<!-- END -->
+`.replace(/  *$/gm, '');
   },
 }, {
   name: () => 'package.json',
   content: ({ moduleName, platforms, githubAccount, authorName, authorEmail, license }) => {
     let dependencies = `
     "react": "16.2.0",
-    "react-native": "^0.52.0"`;
+    "react-native": "^0.52.0"
+    `.replace(/  *$/gm, '');
     if (platforms.indexOf('windows') >= 0) {
       dependencies += `,
     "react-native-windows": "0.52.0"
-`;
+    `.replace(/  *$/gm, '');
     }
     return `{
   "name": "${moduleName}",
@@ -112,7 +115,7 @@ ${name};
     ${dependencies}
   }
 }
-`;
+`.replace(/  *$/gm, '');
   },
 }, {
   name: () => 'index.js',
@@ -134,11 +137,11 @@ export default ${name};
 node_modules/
 npm-debug.log
 yarn-error.log
-`;
+`.replace(/  *$/gm, '');
 
     if (platforms.indexOf('ios') >= 0) {
-      content += `
-
+      content +=
+        `
 # Xcode
 #
 build/
@@ -158,12 +161,12 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
-`;
+`.replace(/  *$/gm, '');
     }
 
     if (platforms.indexOf('android') >= 0) {
-      content += `
-
+      content +=
+        `
 # Android/IntelliJ
 #
 build/
@@ -176,7 +179,7 @@ local.properties
 buck-out/
 \\.buckd/
 *.keystore
-`;
+`.replace(/  *$/gm, '');
     }
 
     return content;
