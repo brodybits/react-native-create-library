@@ -43,6 +43,7 @@ Options:
   -V, --version                             output the version number
   -p, --prefix <prefix>                     The prefix for the library (Default: `RN`)
   --module-prefix <modulePrefix>            The module prefix for the library (Default: `react-native`)
+  --package-name <package-name>             The library package name to be used in package.json. Default: react-native-(name in param-case)
   --package-identifier <packageIdentifier>  (Android only!) The package name for the Android module (Default: `com.reactlibrary`)
   --namespace <namespace>                   (Windows only!) The namespace for the Windows module
    (Default: The name as PascalCase)
