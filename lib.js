@@ -10,6 +10,8 @@ const { execSync } = require('child_process');
 const DEFAULT_NAME = 'Library';
 const DEFAULT_PREFIX = 'RN';
 const DEFAULT_MODULE_PREFIX = 'react-native';
+// const DEFAULT_PACKAGE_NAME = '--react-native-name-in-param-case';
+const DEFAULT_PACKAGE_NAME = null;
 const DEFAULT_PACKAGE_IDENTIFIER = 'com.reactlibrary';
 const DEFAULT_PLATFORMS = ['android', 'ios', 'windows'];
 const DEFAULT_OVERRIDE_PREFIX = false;
@@ -33,6 +35,7 @@ module.exports = ({
   name = DEFAULT_NAME,
   prefix = DEFAULT_PREFIX,
   modulePrefix = DEFAULT_MODULE_PREFIX,
+  packageName = DEFAULT_PACKAGE_NAME,
   packageIdentifier = DEFAULT_PACKAGE_IDENTIFIER,
   platforms = DEFAULT_PLATFORMS,
   overridePrefix = DEFAULT_OVERRIDE_PREFIX,
@@ -67,7 +70,8 @@ module.exports = ({
       identifier, it is recommended to customize the package identifier.`);
   }
 
-  const moduleName = `${modulePrefix}-${paramCase(name)}`;
+  const moduleName = (packageName === DEFAULT_PACKAGE_NAME)
+    ? `${modulePrefix}-${paramCase(name)}` : packageName;
   const rootFolderName = moduleName;
   return createFolder(rootFolderName)
     .then(() => {
@@ -119,7 +123,8 @@ module.exports = ({
           return new Promise((resolve, reject) => {
             // Add postinstall script to example package.json
             const pathExampleApp = `./${rootFolderName}/example`;
-            const moduleName = `${modulePrefix}-${paramCase(name)}`;
+            // (moduleName was already determined above)
+
             npmAddScriptSync(`${pathExampleApp}/package.json`, {
               key: 'postinstall',
               value: `node ../scripts/examples_postinstall.js node_modules/${moduleName}`

@@ -10,6 +10,7 @@ module.exports = {
     const name = args[0];
     const prefix = options.prefix;
     const modulePrefix = options.modulePrefix;
+    const packageName = options.packageName;
     const packageIdentifier = options.packageIdentifier;
     const namespace = options.namespace;
     const platforms = (options.platforms) ? options.platforms.split(',') : options.platforms;
@@ -25,6 +26,7 @@ module.exports = {
       name,
       prefix,
       modulePrefix,
+      packageName,
       packageIdentifier,
       platforms,
       namespace,
@@ -58,6 +60,11 @@ ${emoji.get('arrow_right')}  To get started type \`cd ./${name}\` and run \`npm 
     command: '--module-prefix [modulePrefix]',
     description: 'The module prefix for the library (Default: `react-native`)',
     default: 'react-native',
+  }, {
+    command: '--package-name [packageName]',
+    description: 'The library package name to be used in package.json. Default: react-native-(name in param-case)',
+    // default: '--react-native-name-in-param-case' // (not expected to be a valid name on npm)
+    default: null
   }, {
     command: '--package-identifier [packageIdentifier]',
     description: '(Android only!) The package name for the Android module (Default: `com.reactlibrary`)',
